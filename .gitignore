@@ -1,3 +1,5 @@
+connectdb.sh
+
 *.py[cod]
 
 # C extensions
