@@ -16,6 +16,7 @@ for line in input_f:
 			try:
 				cur.execute("INSERT INTO word_table (word) VALUES (%s)",(word,))
 			except psycopg2.IntegrityError:
+				# The word exists in the table already. Skip
 				pass
 
 cur.close()
