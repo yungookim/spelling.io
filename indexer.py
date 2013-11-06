@@ -12,9 +12,9 @@ cur = conn.cursor()
 for line in input_f:
 	arr = re.sub("[^\w]", " ",  line).split()
 	for word in arr:
-		if re.match("^[A-Za-z]*$", word):
+		if re.match("^[A-Za-z]*$", word) and len(word) > 3:
 			try:
-				cur.execute("INSERT INTO word_table (word) VALUES (%s)",(word,))
+				cur.execute("INSERT INTO word_table (word) VALUES (%s)",(word.lower(),))
 			except psycopg2.IntegrityError:
 				pass
 
