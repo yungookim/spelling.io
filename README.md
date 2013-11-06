@@ -9,4 +9,4 @@ Can this done using only postgresql and its contrib modules and super simple?
   
 NOTES
   
-("select word, similarity(word, '$1') AS similarity FROM word_table WHERE word % '$1' ORDER BY similarity DESC", ('foo');
+("select word, similarity(word, '$1') AS similarity FROM word_table WHERE word % '$1' ORDER BY similarity DESC", ('foo',))
