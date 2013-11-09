@@ -1,0 +1,28 @@
+{
+  "name": "dictionary",
+  "version": "0.0.1",
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.3.x"
+  },
+  "private": true,
+  "author": {
+    "name": "KimY",
+    "email": "yungookim@gmail.com"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "dependencies": {
+    "express": "3.x",
+    "nconf": "0.6.x",
+    "bcrypt-nodejs" : "0.0.x",
+    "underscore" : "1.5.x",
+    "pg" : "2.8.x",
+    "colors" : "0.6.x"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "coffee search_core.coffee"
+  }
+}

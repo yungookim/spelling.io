@@ -1,0 +1,8 @@
+{
+  "port" : 8080,
+  "pg_user" : "kimy",
+  "pg_pw" : "1234",
+  "pg_db" : "dictionary",
+  "pg_host" : "localhost"
+}
+

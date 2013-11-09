@@ -1,0 +1,5 @@
+#!/bin/bash
+cd ../presentation && grunt
+cd ../server
+export NODE_ENV=production
+coffee monitor.coffee
