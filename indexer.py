@@ -15,11 +15,12 @@ for line in input_f:
 		if re.match("^[A-Za-z]*$", word) and len(word) > 3:
 			try:
 				cur.execute("INSERT INTO word_table (word) VALUES (%s)",(word.lower(),))
+				print word.lower()
 			except psycopg2.IntegrityError:
 				# The word exists in the table already. Skip
 				pass
 
 cur.close()
 conn.close()
-ins.close()
+input_f.close()
 

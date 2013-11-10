@@ -5,12 +5,6 @@ colors  = require 'colors'
 app     = express()
 pg      = require 'pg'
 
-# pg.defaults.user     = nconf.get 'pg_user'
-# pg.defaults.password = nconf.get 'pg_pw'
-# pg.defaults.database = nconf.get 'pg_db'
-
-conString = "postgres://kimy:1234@localhost/dictionary";
-
 # In case this runs on Heroku
 process.env.PWD = process.cwd()
 
@@ -31,18 +25,25 @@ else
 #  app.use express.static process.env.PWD  + '/../presentation/app'
 #  app.use express.static process.env.PWD  + '/../presentation/.tmp'
 
-# TODO : clean this code up later
+# Load PG configurations
+pg.defaults.user     = nconf.get 'pg_user'
+pg.defaults.password = nconf.get 'pg_pw'
+pg.defaults.database = nconf.get 'pg_db'
+pg.defaults.host     = nconf.get 'pg_host'
+
+# TODO : clean this code and proper loggin
 app.get '/api/query/:query', (req, res)->
-  pg.connect conString, (err, client, done) ->
+  pg.connect (err, client, done) ->
     res.send 500, 'error' if err
     return console.error("could not connect to postgres", err)  if err
+
     statement = "SELECT word, similarity(word, $1) AS similarity FROM word_table WHERE word % $1 ORDER BY similarity DESC LIMIT 10"
 
     client.query statement, [req.params.query], (err, result) ->
       done()
       return console.error("error running query", err)  if err
-      client.end()   
-      res.send result.rows 
+      client.end()
+      res.send result.rows
 
 app.listen nconf.get "port"
 console.log "Running on".green, nconf.get("port")
