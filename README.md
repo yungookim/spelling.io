@@ -8,5 +8,5 @@ Word prediction and correction REST API built with corpus extracted from Wikiped
 Can this done using only postgresql and its contrib modules and super simple?
   
 NOTES
-  
-("select word, similarity(word, '$1') AS similarity FROM word_table WHERE word % '$1' ORDER BY similarity DESC LIMIT 10", ('foo',))
+
+http://cssdeck.com/labs/search-box-with-suggestions-dropdown

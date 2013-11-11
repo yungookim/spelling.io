@@ -12,6 +12,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="scripts/lib/spelling.css">
     <!-- endbuild -->
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
@@ -34,42 +35,87 @@
         <h3 class="text-muted">Spelling.io</h3>
       </div>
 
-      <div class="jumbotron">
-        <h2>Spelling Correction & Prediction API</h2>
-        <p class="lead">Based on the corpus generated from Wikipedia</p>
-      </div>
+      <h1>Spelling Correction & Prediction REST API</h1>
+
+      <pre class="prettyprint">
+
+        // Easiest way to suggest spellings.
+      </pre>
 
       <div class="row text-center">
         <div class="col-md-12">
-          <form role="form">
-            <input type="text" class="form-control" placeholder="Give   it a try!">
-            <span class="help-block"><h3>Try accomodation, acheive, adress, beleive</h3></span>
-          </form>
+          <div class="jumbotron">
+            <i class="fa fa-search fa-5x"></i>
+            <p></p>
+
+            <input id="query" type="text" class="form-control" placeholder="Give it a try!">
+
+            <span class="help-block"><h3>Try <u>accomodation</u>, <u>acheive</u>, <u>adress</u>, <u>beleive</u></h3></span>
+            <h4>Results</h4>
+            <p id="results">
+
+            </p>
+          </div>
         </div>
       </div>
 
-      <div class="row marketing">
-        <div class="col-lg-6">
-          <h4>REST Query</h4>
-          <pre>
-            <p>GET spelling.io/api/query/en/:query</p>
-          </pre>
-          
-          <h4>Bootstrap</h4>
-          <p>Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>
+      <div class="row">
+        <div class="col-lg-12">
+          <h2>REST API</h2>
+          <p>
+            
+            <pre class="prettyprint">
 
-          <h4>Modernizr</h4>
-          <p>Modernizr is an open-source JavaScript library that helps you build the next generation of HTML5 and CSS3-powered websites.</p>
+              // GET spelling.io/api/query/en/:query
+
+              // Returns
+              [
+                 {
+                    "word": String,
+                    "similarity": Integer
+                  },
+                  ...
+              ]
+            </pre>
+          </p>
+
+          <hr>
+
+          <h2>Example</h2>
+          <pre class="prettyprint">
+
+            // cURL spelling.io/api/query/en/accomodation
+
+            // Returns
+            [
+              {
+                "word": "accommodation",
+                "similarity": 1
+              },
+              {
+                "word": "accommodations",
+                "similarity": 0.8125
+              },
+              {
+                "word": "accomodation",
+                "similarity": 0.8
+              }
+            ]
+          </pre>
 
         </div>
-        <div class="col-lg-6">
-          <h4>Backbone.js</h4>
-          <p>Backbone.js gives structure to web applications by providing models, collections, views and connects it all to your existing API over a RESTful JSON interface.</p>
+      </div>
 
-          <h4>Underscore.js</h4>
-          <p>Underscore.js is a utility-belt library for JavaScript that provides a lot of the functional programming support</p>
+      <div class="row">
+        <div class="col-lg-12">
+          <h2>Javascript (Coming Soon!)</h2>
+          <pre class="prettyprint">
+            // Include the script :
+            &lt;script type="text/javascript" src="/spell.js"&gt;&lt;/script&gt;
 
-
+            // Initialize the input box :
+            $("input[type='text']").spelling()
+          </pre>
         </div>
       </div>
 
@@ -111,11 +157,13 @@
     <script src="bower_components/sass-bootstrap/js/scrollspy.js"></script>
     <script src="bower_components/sass-bootstrap/js/collapse.js"></script>
     <script src="bower_components/sass-bootstrap/js/tab.js"></script>
+    
+    <script src="scripts/lib/spelling.js"></script>
     <!-- endbuild -->
-
     <!-- build:js({.tmp,app}) scripts/main.js -->
     <script src="scripts/main.js"></script>
     <script src="scripts/templates.js"></script>
     <!-- endbuild -->
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert"></script>
 </body>
 </html>

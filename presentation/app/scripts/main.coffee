@@ -5,8 +5,15 @@ window.presentation =
   Routers: {}
   init: ->
     'use strict'
-    console.log 'Hello from Backbone!'
+
+    $('#query').spelling()
+
+    
+          
 
 $ ->
   'use strict'
   presentation.init();
+
+
+query_results = (ret)->

@@ -30,19 +30,22 @@ pg.defaults.user     = nconf.get 'pg_user'
 pg.defaults.password = nconf.get 'pg_pw'
 pg.defaults.database = nconf.get 'pg_db'
 pg.defaults.host     = nconf.get 'pg_host'
+pg.defaults.poolSize = nconf.get 'pg_pool_size' || 10
 
 # TODO : clean this code and proper loggin
-app.get '/api/query/:query', (req, res)->
+app.get '/api/query/en/:query', (req, res)->
   pg.connect (err, client, done) ->
     res.send 500, 'error' if err
     return console.error("could not connect to postgres", err)  if err
-
-    statement = "SELECT word, similarity(word, $1) AS similarity FROM word_table WHERE word % $1 ORDER BY similarity DESC LIMIT 10"
+    
+    # should give more weight to the occurrrence
+    statement = "SELECT word, similarity(word, $1)  AS similarity FROM word_table WHERE word % $1 ORDER BY similarity DESC LIMIT 3"
 
     client.query statement, [req.params.query], (err, result) ->
       done()
       return console.error("error running query", err)  if err
-      client.end()
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "X-Requested-With");
       res.send result.rows
 
 app.listen nconf.get "port"
