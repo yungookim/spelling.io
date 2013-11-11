@@ -1,3 +1,5 @@
+CREATE EXTENSION pg_trgm;
+
 DROP INDEX IF EXISTS word_trgm_idx CASCADE;
 DROP TABLE IF EXISTS word_table CASCADE;
 
