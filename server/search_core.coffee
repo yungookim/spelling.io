@@ -37,7 +37,7 @@ app.get '/api/query/:query', (req, res)->
     res.send 500, 'error' if err
     return console.error("could not connect to postgres", err)  if err
 
-    statement = "SELECT word, similarity(word, $1) AS similarity FROM word_table WHERE word % $1 ORDER BY similarity DESC LIMIT 10"
+    statement = "SELECT word, similarity(word, $1) AS similarity FROM word_table WHERE word % $1 ORDER BY similarity DESC LIMIT 5"
 
     client.query statement, [req.params.query], (err, result) ->
       done()
