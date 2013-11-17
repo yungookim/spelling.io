@@ -88,7 +88,7 @@ li:first-child:hover:after { display: none }
 
 .spell-search .spelling-results li:last-child { margin-bottom: -1px }
 
-.spell-search .spelling-results li:hover {
+/*.spell-search .spelling-results li:hover {
     text-decoration: none;
     color: #fff;
     text-shadow: 0 -1px rgba(0, 0, 0, 0.3);
@@ -105,7 +105,7 @@ li:first-child:hover:after { display: none }
     -ms-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
     -o-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
     box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), 0 1px rgba(0, 0, 0, 0.08);
-}
+}*/
 
 .spell-search .spelling-results a {
     display: block;
@@ -118,12 +118,20 @@ li:first-child:hover:after { display: none }
     text-shadow: 0 1px #fff;
     border: 1px solid transparent;
     border-radius: 3px;
+    cursor: pointer;
 }
 
 .spell-search .spelling-results a:hover {
     text-decoration: none;
     color:inherit;
     text-shadow:inherit;
+}
+
+.spell-search .spelling-results .selected {
+    text-decoration: none;
+    color:inherit;
+    text-shadow:inherit;
+    color: black;
 }
 
 :-moz-placeholder {
