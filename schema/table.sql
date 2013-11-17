@@ -5,7 +5,10 @@ DROP TABLE IF EXISTS word_table CASCADE;
 
 
 CREATE TABLE word_table (
-	word     VARCHAR(100) NOT NULL PRIMARY KEY
+	word        VARCHAR(100) NOT NULL PRIMARY KEY,
+	occurrence  INTEGER DEFAULT 0,
+	used        INTEGER DEFAULT 0,
+        lang        VARCHAR(3)
 )
 WITH (
   OIDS=FALSE

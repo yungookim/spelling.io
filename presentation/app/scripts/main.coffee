@@ -7,10 +7,7 @@ window.presentation =
     'use strict'
 
     $('#query').spelling()
-
     
-          
-
 $ ->
   'use strict'
   presentation.init();

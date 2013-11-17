@@ -37,9 +37,9 @@ app.get '/api/query/en/:query', (req, res)->
   pg.connect (err, client, done) ->
     res.send 500, 'error' if err
     return console.error("could not connect to postgres", err)  if err
-    
-    # should give more weight to the occurrrence
-    statement = "SELECT word, similarity(word, $1) AS similarity FROM word_table WHERE word % $1 ORDER BY similarity DESC LIMIT 3"
+
+    statement = "SELECT word, similarity(word, $1) AS similarity FROM word_table WHERE lang='en' AND word % $1 AND occurrence > 0 ORDER BY similarity DESC LIMIT 3"
+
 
     client.query statement, [req.params.query], (err, result) ->
       done()
