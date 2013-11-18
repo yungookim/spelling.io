@@ -37,24 +37,30 @@ app.get '/api/query/en/:query', (req, res)->
     res.send 500, 'error' if err
     return console.error("could not connect to postgres", err)  if err
 
-    # statement = "SELECT word, similarity(word, $1) AS similarity FROM word_table WHERE lang='en' AND word % $1 AND occurrence > 0 ORDER BY similarity DESC LIMIT 3"
-    statement = """
-                WITH word_query AS (
-                  SELECT word, occurrence, similarity(word, '$1') AS similarity 
-                  FROM word_table WHERE word % $1 AND occurrence > 2 
-                  ORDER BY similarity DESC LIMIT 10
-                )
-                SELECT word, occurrence, similarity
-                FROM word_query
-                ORDER BY occurrence DESC LIMIT 10;
-                """
+    unless req.query.states
+      statement = """
+                  WITH word_query AS (
+                  SELECT word, occurrence, similarity(word, '%s') AS similarity
+                    FROM word_table WHERE word % '%s' AND occurrence > 100
+                    ORDER BY similarity DESC, occurrence DESC LIMIT 10 
+                  )
+                  SELECT word
+                  FROM word_query
+                  LIMIT 10
+                  """
+    else
+      statement = """
+                  SELECT word, occurrence, similarity(word, '%s') AS similarity
+                    FROM word_table WHERE word % '%s' AND occurrence > 100
+                    ORDER BY similarity DESC, occurrence DESC LIMIT 10
+                  """
 
-    client.query statement, [req.params.query], (err, result) ->
-      done()
-      return console.error("error running query", err)  if err
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header("Access-Control-Allow-Headers", "X-Requested-With");
-      res.send result.rows
+      client.query statement, [req.params.query], (err, result) ->
+        done()
+        return console.error("error running query", err)  if err
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "X-Requested-With");
+        res.send result.rows
 
 app.listen nconf.get "port"
 console.log "Running on".green, nconf.get("port")
