@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>presentation</title>
+    <title>Spelling.io</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -22,11 +22,6 @@
 
     <div class="container">
       <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
         <h3 class="text-muted">Spelling.io</h3>
       </div>
 
@@ -38,7 +33,7 @@
 
       <pre class="prettyprint">
 
-        // Easiest way to suggest spellings.
+        // Simple RestAPI to correct/suggest inputbox spelling
       </pre>
 
       <div class="row text-center">
@@ -47,7 +42,7 @@
             <i class="fa fa-search fa-5x"></i>
             <p></p>
 
-            <input id="query" type="text" class="form-control" placeholder="Give it a try!">
+            <input id="query" type="text" class="form-control" placeholder="Give it a try!" disabled="disabled">
 
             <span class="help-block"><h3>Try <u>accomodation</u>, <u>acheive</u>, <u>adress</u>, <u>beleive</u></h3></span>
             <h4>Results</h4>
@@ -70,11 +65,22 @@
               // Returns
               [
                  {
-                    "word": String,
-                    "similarity": Integer
+                    "word": String
                   },
                   ...
               ]
+
+              // GET spelling.io/api/query/en/:query?limit=10&states=true
+              // Returns 10 word recommendations and some useful numbers
+              [
+                 {
+                    "word": String,
+                    "similarity" : Float,
+                    "occurrence" : Integer   //Number of occurrence in Open ANC (American National Corpus)
+                  },
+                  ...
+              ]
+
             </pre>
           </p>
 
@@ -88,16 +94,13 @@
             // Returns
             [
               {
-                "word": "accommodation",
-                "similarity": 1
+                "word": "accommodation"
               },
               {
-                "word": "accommodations",
-                "similarity": 0.8125
+                "word": "accommodations"
               },
               {
-                "word": "accomodation",
-                "similarity": 0.8
+                "word": "accomodation"
               }
             ]
           </pre>
@@ -107,14 +110,16 @@
 
       <div class="row">
         <div class="col-lg-12">
-          <h2>Javascript (Coming Soon!)</h2>
+          <h2>jQuery Plugin</h2>
           <pre class="prettyprint">
             
             // Include the script :
-            &lt;script type="text/javascript" src="/spell.js"&gt;&lt;/script&gt;
+            &lt;script type="text/javascript" src="/spellingio.js"&gt;&lt;/script&gt;
 
             // Initialize the input box :
-            $("input[type='text']").spelling()
+            $("input[type='text']").spelling([options])
+            // Optional Args
+            { limit : 5, state : true }
           </pre>
         </div>
       </div>
