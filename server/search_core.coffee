@@ -18,7 +18,6 @@ app.configure ->
 if nconf.env().get('NODE_ENV')
   console.log 'Running Production Mode'
   nconf.env().argv().file process.env.PWD  + '/config.json'
-#  app.use express.static process.env.PWD  + '/../presentation/dist'
 else 
   console.log 'Running Dev Mode'.red
   nconf.env().argv().file process.env.PWD  + '/devconfig.json'
@@ -38,8 +37,17 @@ app.get '/api/query/en/:query', (req, res)->
     res.send 500, 'error' if err
     return console.error("could not connect to postgres", err)  if err
 
-    statement = "SELECT word, similarity(word, $1) AS similarity FROM word_table WHERE lang='en' AND word % $1 AND occurrence > 0 ORDER BY similarity DESC LIMIT 3"
-
+    # statement = "SELECT word, similarity(word, $1) AS similarity FROM word_table WHERE lang='en' AND word % $1 AND occurrence > 0 ORDER BY similarity DESC LIMIT 3"
+    statement = """
+                WITH word_query AS (
+                  SELECT word, occurrence, similarity(word, '$1') AS similarity 
+                  FROM word_table WHERE word % $1 AND occurrence > 2 
+                  ORDER BY similarity DESC LIMIT 10
+                )
+                SELECT word, occurrence, similarity
+                FROM word_query
+                ORDER BY occurrence DESC LIMIT 10;
+                """
 
     client.query statement, [req.params.query], (err, result) ->
       done()
