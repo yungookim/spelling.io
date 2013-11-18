@@ -3,7 +3,7 @@ express = require 'express'
 _       = require 'underscore'
 colors  = require 'colors'
 app     = express()
-pg      = require 'pg'
+pg      = require('pg')
 
 # In case this runs on Heroku
 process.env.PWD = process.cwd()
@@ -34,33 +34,40 @@ pg.defaults.poolSize = nconf.get 'pg_pool_size' || 10
 # TODO : clean this code and proper loggin
 app.get '/api/query/en/:query', (req, res)->
   pg.connect (err, client, done) ->
-    res.send 500, 'error' if err
-    return console.error("could not connect to postgres", err)  if err
+    res.send 500 if err
+    return console.error "could not connect to postgres", err if err
 
-    unless req.query.states
+    limit = req.query.limit or 10
+    state = req.query.state or false
+
+    unless state
       statement = """
-                  WITH word_query AS (
-                  SELECT word, occurrence, similarity(word, '%s') AS similarity
-                    FROM word_table WHERE word % '%s' AND occurrence > 100
-                    ORDER BY similarity DESC, occurrence DESC LIMIT 10 
-                  )
-                  SELECT word
-                  FROM word_query
-                  LIMIT 10
-                  """
-    else
+                 WITH word_query AS (
+                   SELECT word, occurrence, similarity(word, $1) AS similarity
+                     FROM word_table WHERE word %$1 AND occurrence > 100
+                     ORDER BY similarity DESC, occurrence DESC LIMIT 10 
+                 )
+                 SELECT word
+                 FROM word_query
+                 LIMIT $2
+                 """
+    else     
       statement = """
-                  SELECT word, occurrence, similarity(word, '%s') AS similarity
-                    FROM word_table WHERE word % '%s' AND occurrence > 100
-                    ORDER BY similarity DESC, occurrence DESC LIMIT 10
+                  SELECT word, occurrence, similarity(word, $1) AS similarity
+                    FROM word_table WHERE word % $1 AND occurrence > 100
+                    ORDER BY similarity DESC, occurrence DESC LIMIT $2
                   """
 
-    client.query statement, [req.params.query], (err, result) ->
+    client.query statement, [req.params.query, limit], (err, result) ->
       done()
+      res.send 500 if err
       return console.error("error running query", err)  if err
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Headers", "X-Requested-With");
-      res.send result.rows
+
+      console.log result
+
+      res.json result.rows
 
 app.listen nconf.get "port"
 console.log "Running on".green, nconf.get("port")
