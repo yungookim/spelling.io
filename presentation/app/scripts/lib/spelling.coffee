@@ -73,7 +73,7 @@
 
       $('.spelling-results').empty() if last_input.length < 3
       if last_input.length > 3
-        url = "http://localhost:8080/api/query/en/" + last_input
+        url = "http://api.spelling.io/api/query/en/" + last_input
         $.getJSON url + "?callback=query_results", null, (rets) ->
 
           $('.spelling-results').empty()
