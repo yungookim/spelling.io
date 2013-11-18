@@ -55,12 +55,12 @@ app.get '/api/query/en/:query', (req, res)->
                     ORDER BY similarity DESC, occurrence DESC LIMIT 10
                   """
 
-      client.query statement, [req.params.query], (err, result) ->
-        done()
-        return console.error("error running query", err)  if err
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "X-Requested-With");
-        res.send result.rows
+    client.query statement, [req.params.query], (err, result) ->
+      done()
+      return console.error("error running query", err)  if err
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header("Access-Control-Allow-Headers", "X-Requested-With");
+      res.send result.rows
 
 app.listen nconf.get "port"
 console.log "Running on".green, nconf.get("port")
