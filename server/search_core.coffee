@@ -38,7 +38,7 @@ app.get '/api/query/en/:query', (req, res)->
     return console.error "could not connect to postgres", err if err
 
     limit = req.query.limit or 10
-    state = req.query.state or false
+    state = req.query.states or false
 
     unless state
       statement = """
