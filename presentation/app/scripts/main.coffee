@@ -6,7 +6,7 @@ window.presentation =
   init: ->
     'use strict'
 
-    $('#query').spelling()
+    $('#query').spelling({states : true})
     
 $ ->
   'use strict'

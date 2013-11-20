@@ -1,6 +1,10 @@
 (($) ->
 
   $.fn.spelling = (params)-> 
+    params = params or {}
+    QUERY_LIMIT = 3 or params.limit
+    WITH_STATES = false or params.states
+
     window.spellingio = window.spellingio or {}
     window.spellingio.inputbox = @
 
@@ -72,16 +76,25 @@
       last_input = input_arr[input_arr.length-1]
 
       $('.spelling-results').empty() if last_input.length < 3
-      if last_input.length > 3
-        url = "http://api.spelling.io/api/query/en/" + last_input
-        $.getJSON url + "?callback=query_results", null, (rets) ->
+      if last_input.length > 2
+        url = 'http://api.spelling.io/api/query/en/'
+        query_string = '?limit=' + QUERY_LIMIT + '&states=' + WITH_STATES
+        callback = '&callback=query_results'
+        uri = url + last_input + query_string + callback
+
+        $.getJSON uri, null, (rets) ->
 
           $('.spelling-results').empty()
           delete window.spellingio.selected
 
           _.each rets, (word) =>
+            
+            if WITH_STATES
+              result_presentation = word.word + ' ' + word.occurrence + ' ' + word.similarity
+            else 
+              result_presentation = word.word 
 
-            $li = $("<li/>").html($("<a/>").html word.word)
+            $li = $("<li/>").html($("<a/>").html result_presentation)
             $('.spelling-results').append $li
 
             # Switch the selected word with the word in the input box (Word that has the cursor)

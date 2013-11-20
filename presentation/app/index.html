@@ -47,13 +47,9 @@
             <i class="fa fa-search fa-5x"></i>
             <p></p>
 
-            <input id="query" type="text" class="form-control" placeholder="Give it a try!" disabled>
+            <input id="query" type="text" class="form-control" placeholder="Give it a try!">
 
-            <span class="help-block"><h3>Try <u>accomodation</u>, <u>acheive</u>, <u>adress</u>, <u>beleive</u></h3></span>
-            <h4>Results</h4>
-            <p id="results">
-
-            </p>
+            <span class="help-block"><h3>Try <u>acomodat</u>, <u>achieav</u>, <u>adress</u>, <u>belitve</u></h3></span>
           </div>
         </div>
       </div>
@@ -81,7 +77,8 @@
                  {
                     "word": String,
                     "similarity" : Float,
-                    "occurrence" : Integer   //Number of occurrence in Open ANC (American National Corpus)
+                    // Number of occurrence in Open ANC (American National Corpus)
+                    "occurrence" : Integer
                   },
                   ...
               ]
@@ -124,7 +121,7 @@
             // Initialize the input box :
             $("input[type='text']").spelling([options])
             // Optional Args
-            { limit : 5, state : true }
+            { limit : 5, states : true }
           </pre>
         </div>
       </div>
