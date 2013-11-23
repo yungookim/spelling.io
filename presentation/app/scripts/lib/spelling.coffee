@@ -53,7 +53,7 @@
 
       # Enter key when an element is focused
       if e.keyCode is 13
-        selected_word = window.spellingio.selected.html()
+        selected_word = window.spellingio.selected.html().split(' ')[0]
         val = window.spellingio.inputbox.val()
         val_arr = val.split ' '
         # Replace
@@ -99,7 +99,7 @@
 
             # Switch the selected word with the word in the input box (Word that has the cursor)
             $li.bind 'click', (event)=>
-              word = $(event.currentTarget).find('a').html()
+              word = $(event.currentTarget).find('a').html().split(' ')[0]
               val = window.spellingio.inputbox.val()
               val_arr = val.split ' '
               # Replace
