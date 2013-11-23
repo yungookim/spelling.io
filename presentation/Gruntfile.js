@@ -248,9 +248,20 @@ module.exports = function (grunt) {
             '.htaccess',
             'images/{,*/}*.{webp,gif}',
             'styles/fonts/{,*/}*.*',
-            'bower_components/sass-bootstrap/fonts/*.*'
+            'bower_components/sass-bootstrap/fonts/*.*',
+            'scripts/lib/spelling.css'
           ]
-        }]
+        },
+        {
+          expand: true,
+          dot: true,
+          cwd: '.tmp/scripts',
+          dest: '<%= yeoman.dist %>/scripts/',
+          src: [
+            'lib/spelling.js'
+          ]
+        }
+        ]
       }
     },
     bower: {
@@ -334,7 +345,6 @@ module.exports = function (grunt) {
     'mustache',
     'compass:dist',
     'useminPrepare',
-    'imagemin',
     'htmlmin',
     'concat',
     'cssmin',
@@ -346,7 +356,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', [
     'jshint',
-    'test',
     'build'
   ]);
 };
