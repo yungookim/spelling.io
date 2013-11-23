@@ -27,10 +27,6 @@
 
       <h1>Spelling Correction & Prediction REST API</h1>
 
-      <br>
-        <div class="alert alert-danger">Warning : Nothing hear works yet. Should be up and running within this week.</div>
-      <br>
-
       <pre class="prettyprint">
 
         // Simple RestAPI to correct/suggest inputbox spelling
@@ -86,19 +82,21 @@
           <h2>Example</h2>
           <pre class="prettyprint">
 
-            // cURL http://spelling.io/api/query/en/accomodation
+            // cURL http://api.spelling.io/api/query/en/accomodation
 
             // Returns
             [
-              {
-                "word": "accommodation"
-              },
-              {
-                "word": "accommodations"
-              },
-              {
-                "word": "accomodation"
-              }
+              {"word":"accommodate"},
+              {"word":"accumulation"},
+              {"word":"action"},
+              {"word":"activation"}
+            ]
+
+            // cURL http://api.spelling.io/api/query/en/accomodation?limit=1&states=true
+
+            // Returns
+            [
+              {"word":"accommodate", "occurrence":162, "similarity":0.470588}
             ]
           </pre>
 
