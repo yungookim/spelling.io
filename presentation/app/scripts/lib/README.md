@@ -1,1 +1,1 @@
-jQUery plug-in for spelling.io
+jQuery plug-in for http://spelling.io
