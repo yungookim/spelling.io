@@ -258,7 +258,8 @@ module.exports = function (grunt) {
           cwd: '.tmp/scripts',
           dest: '<%= yeoman.dist %>/scripts/',
           src: [
-            'lib/spelling.js'
+            'lib/spelling.js',
+            '*.js'
           ]
         }
         ]
@@ -309,7 +310,6 @@ module.exports = function (grunt) {
         'coffee',
         'createDefaultTemplate',
         'mustache',
-        'compass:server',
         'connect:test',
         'watch:livereload'
       ]);
@@ -320,7 +320,6 @@ module.exports = function (grunt) {
       'coffee:dist',
       'createDefaultTemplate',
       'mustache',
-      'compass:server',
       'connect:livereload',
       'open',
       'watch'
@@ -332,8 +331,6 @@ module.exports = function (grunt) {
     'coffee',
     'createDefaultTemplate',
     'mustache',
-    'compass',
-    'connect:test',
     'mocha',
     'watch:test'
   ]);
@@ -343,19 +340,16 @@ module.exports = function (grunt) {
     'coffee',
     'createDefaultTemplate',
     'mustache',
-    'compass:dist',
     'useminPrepare',
     'htmlmin',
     'concat',
     'cssmin',
     'uglify',
     'copy',
-    'rev',
     'usemin'
   ]);
 
   grunt.registerTask('default', [
-    'jshint',
     'build'
   ]);
 };
